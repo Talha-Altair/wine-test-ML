@@ -7,6 +7,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet
 from urllib.parse import urlparse
+from csv import writer
 
 import logging
 
@@ -19,6 +20,25 @@ def eval_metrics(actual, pred):
     mae = mean_absolute_error(actual, pred)
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
+
+def log_metrics(alpha,l1_ratio,rmse,mae,r2):
+    # List 
+    List=[alpha,l1_ratio,rmse,mae,r2]
+    
+    # Open our existing CSV file in append mode
+    # Create a file object for this file
+    with open('logs.csv', 'a') as f_object:
+    
+        # Pass this file object to csv.writer()
+        # and get a writer object
+        writer_object = writer(f_object)
+    
+        # Pass the list as an argument into
+        # the writerow()
+        writer_object.writerow(List)
+    
+        #Close the file object
+        f_object.close()
 
 
 if __name__ == "__main__":
@@ -45,8 +65,11 @@ if __name__ == "__main__":
     train_y = train[["quality"]]
     test_y = test[["quality"]]
 
-    alpha = float(sys.argv[1]) if len(sys.argv) > 1 else 0.6
-    l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.6
+    alpha = float(input("enter alpha value:"))
+    l1_ratio = float(input("enter l1 ratio:"))
+
+    alpha = float(sys.argv[1]) if len(sys.argv) > 1 else alpha
+    l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else l1_ratio
 
     lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
     lr.fit(train_x, train_y)
@@ -54,6 +77,8 @@ if __name__ == "__main__":
     predicted_qualities = lr.predict(test_x)
 
     (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
+
+    log_metrics(alpha,l1_ratio,rmse,mae,r2)
 
     print("Elasticnet model (alpha=%f, l1_ratio=%f):" % (alpha, l1_ratio))
     print("  RMSE: %s" % rmse)

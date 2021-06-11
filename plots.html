@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DVC Plot</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.10.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.8.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.5.1"></script>
+</head>
+<body>
+    <div id = "plot0"></div>
+<script type = "text/javascript">
+    var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "alpha": "0.6",
+        "l1_ratio": "0.6",
+        "mae": "0.6647524814105722",
+        "r2": "0.019698951776764728",
+        "rev": "workspace",
+        "rmse": "0.8317884179944764",
+        "step": 0
+    },
+    {
+        "alpha": "0.6",
+        "l1_ratio": "0.6",
+        "mae": "0.6647524814105722",
+        "r2": "0.019698951776764728",
+        "rev": "workspace",
+        "rmse": "0.8317884179944764",
+        "step": 1
+    },
+    {
+        "alpha": "0.7",
+        "l1_ratio": "0.7",
+        "mae": "0.667898097502809",
+        "r2": "0.017488244494447747",
+        "rev": "workspace",
+        "rmse": "0.832725785743381",
+        "step": 2
+    },
+    {
+        "alpha": "1.0",
+        "l1_ratio": "1.0",
+        "mae": "0.672504249193216",
+        "r2": "0.017246911564584355",
+        "rev": "workspace",
+        "rmse": "0.8328280500742669",
+        "step": 3
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "mark": {
+        "type": "line"
+    },
+    "encoding": {
+        "x": {
+            "field": "step",
+            "type": "quantitative",
+            "title": "step"
+        },
+        "y": {
+            "field": "r2",
+            "type": "quantitative",
+            "title": "r2",
+            "scale": {
+                "zero": false
+            }
+        },
+        "color": {
+            "field": "rev",
+            "type": "nominal"
+        }
+    }
+}
+;
+    vegaEmbed('#plot0', spec);
+</script>
+</body>
+</html>
